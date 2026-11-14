@@ -1,0 +1,35 @@
+# Build directories and CMake artifacts
+/build/
+/bin/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
+/*.cmake
+CMakeUserPresets.json
+
+# Compiled binaries and objects
+*.exe
+*.dll
+*.lib
+*.exp
+*.obj
+*.o
+*.a
+
+# IDE
+.vs/
+.idea/
+*.user
+*.suo
+
+# Debug / temp
+*.pdb
+*.ilk
+*.ipch
+*.tlog
+*.log
+
+# Task description / misc
+*.docx
+build.bat
