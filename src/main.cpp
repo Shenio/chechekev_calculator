@@ -21,22 +21,26 @@ int main() {
         std::cout << "Type 'help', 'list', or 'exit'.\n\n";
 
         PluginManager pm;
-        std::string pluginDir = "./plugins";
+        std::string pluginDir;
         {
             std::error_code ec;
-            if (!(fs::exists(pluginDir, ec) && fs::is_directory(pluginDir, ec))) {
-                char buf[MAX_PATH];
-                DWORD len = GetModuleFileNameA(nullptr, buf, MAX_PATH);
-                if (len > 0 && len < MAX_PATH) {
-                    fs::path exeDir = fs::path(buf).parent_path();
-                    fs::path candidate = exeDir / "plugins";
-                    if (fs::exists(candidate, ec) && fs::is_directory(candidate, ec)) {
-                        pluginDir = candidate.string();
-                    }
+            char buf[MAX_PATH];
+            DWORD len = GetModuleFileNameA(nullptr, buf, MAX_PATH);
+            if (len > 0 && len < MAX_PATH) {
+                fs::path exeDir = fs::path(buf).parent_path();
+                fs::path candidate = exeDir / "plugins";
+                if (fs::exists(candidate, ec) && fs::is_directory(candidate, ec)) {
+                    pluginDir = candidate.string();
                 }
             }
+            if (pluginDir.empty() && fs::exists("./plugins", ec) && fs::is_directory("./plugins", ec)) {
+                pluginDir = "./plugins";
+            }
         }
-        pm.loadFromDirectory(pluginDir);
+        if (!pluginDir.empty()) {
+            pm.loadFromDirectory(pluginDir);
+        }
+
 
         std::cout << "Available functions:\n";
         pm.list(std::cout);
