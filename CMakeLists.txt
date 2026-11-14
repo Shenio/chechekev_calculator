@@ -11,12 +11,18 @@ if(MSVC)
     add_compile_options(/EHs)
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
 # Main executable
-add_executable(calc src/main.cpp)
+add_executable(calc
+    src/main.cpp
+    src/plugin.cpp
+    src/tokenizer.cpp
+    src/parser.cpp
+)
 target_include_directories(calc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set_target_properties(calc PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/$<CONFIG>
